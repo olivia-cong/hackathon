@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Environment variables (contains API keys - DO NOT COMMIT)
+.env
+
+# Build outputs
+dist/
+build/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Temporary files
+nul
+*.tmp

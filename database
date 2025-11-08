@@ -9,14 +9,14 @@ import { getDatabase, ref, set, get, onValue, update } from 'https://www.gstatic
 
 // Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyAqeSCpUc9bP5s-ATMAE9_jK7cF4_5KXKk",
-  authDomain: "libstatus-97ab1.firebaseapp.com",
-  databaseURL: "https://libstatus-97ab1-default-rtdb.firebaseio.com",
-  projectId: "libstatus-97ab1",
-  storageBucket: "libstatus-97ab1.firebasestorage.app",
-  messagingSenderId: "940250549229",
-  appId: "1:940250549229:web:6992a59fa54136aef075e4"
-};
+    apiKey: "AIzaSyAqeSCpUc9bP5s-ATMAE9_jK7cF4_5KXKk",
+    authDomain: "libstatus-97ab1.firebaseapp.com",
+    databaseURL: "https://libstatus-97ab1-default-rtdb.firebaseio.com",
+    projectId: "libstatus-97ab1",
+    storageBucket: "libstatus-97ab1.firebasestorage.app",
+    messagingSenderId: "940250549229",
+    appId: "1:940250549229:web:15b80dcd14988a92f075e4"
+  };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);

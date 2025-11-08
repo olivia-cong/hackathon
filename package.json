@@ -1,0 +1,23 @@
+{
+  "name": "lib-status-board",
+  "version": "1.0.0",
+  "description": "Dartmouth Library Status Board - Real-time study spot availability tracker",
+  "type": "module",
+  "scripts": {
+    "test": "node test-cli.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "firebase": "^10.7.1",
+    "node-fetch": "^3.3.2",
+    "readline-sync": "^1.4.10"
+  },
+  "keywords": [
+    "dartmouth",
+    "library",
+    "study-spots",
+    "real-time"
+  ],
+  "author": "",
+  "license": "MIT"
+}
