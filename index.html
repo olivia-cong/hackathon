@@ -20,8 +20,15 @@
         }
 
         .container {
-            max-width: 800px;
+            max-width: 1400px;
             margin: 0 auto;
+        }
+
+        .main-layout {
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            gap: 24px;
+            align-items: start;
         }
 
         header {
@@ -164,6 +171,109 @@
             opacity: 0.8;
         }
 
+        .quiz-panel {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 20px;
+        }
+
+        .quiz-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #00693e;
+            margin-bottom: 16px;
+        }
+
+        .quiz-question {
+            margin-bottom: 20px;
+        }
+
+        .quiz-label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: block;
+            color: #333;
+        }
+
+        .quiz-select, .quiz-input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 0.95rem;
+        }
+
+        .quiz-btn {
+            width: 100%;
+            padding: 12px;
+            background: #00693e;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .quiz-btn:hover {
+            background: #004d2c;
+        }
+
+        .quiz-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .recommendation-box {
+            margin-top: 24px;
+            padding: 20px;
+            background: #f0fdf4;
+            border: 2px solid #00693e;
+            border-radius: 12px;
+        }
+
+        .rec-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #00693e;
+            margin-bottom: 12px;
+        }
+
+        .rec-location {
+            font-weight: 600;
+            color: #065f46;
+            margin-bottom: 4px;
+        }
+
+        .rec-reason {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+        }
+
+        .rec-tip {
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            font-style: italic;
+            color: #555;
+            margin-top: 12px;
+        }
+
+        @media (max-width: 1024px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+            .quiz-panel {
+                position: relative;
+                top: 0;
+            }
+        }
+
         @media (max-width: 640px) {
             h1 { font-size: 2rem; }
             .locations-grid { grid-template-columns: 1fr; }
@@ -179,7 +289,63 @@
             <p class="tagline">Know before you go. Real-time Dartmouth study spaces.</p>
         </header>
 
-        <div id="app" class="loading">Loading study spots...</div>
+        <div class="main-layout">
+            <div class="quiz-panel">
+                <div class="quiz-title">Find Your Perfect Spot</div>
+                <div id="quiz-form">
+                    <div class="quiz-question">
+                        <label class="quiz-label">Noise Level</label>
+                        <select class="quiz-select" id="noise">
+                            <option value="silent">Silent (absolute quiet)</option>
+                            <option value="quiet">Quiet (whispers okay)</option>
+                            <option value="moderate">Moderate (some chatter)</option>
+                            <option value="social">Social (collaborative buzz)</option>
+                        </select>
+                    </div>
+
+                    <div class="quiz-question">
+                        <label class="quiz-label">Study Type</label>
+                        <select class="quiz-select" id="study-type">
+                            <option value="solo-focus">Solo deep focus</option>
+                            <option value="solo-flexible">Solo with breaks</option>
+                            <option value="group-work">Group collaboration</option>
+                            <option value="mixed">Flexible/mixed</option>
+                        </select>
+                    </div>
+
+                    <div class="quiz-question">
+                        <label class="quiz-label">Atmosphere</label>
+                        <select class="quiz-select" id="atmosphere">
+                            <option value="minimal-distraction">Minimal distraction (carrels)</option>
+                            <option value="open-bright">Open & bright (natural light)</option>
+                            <option value="traditional">Cozy & traditional</option>
+                            <option value="modern">Modern & creative</option>
+                        </select>
+                    </div>
+
+                    <div class="quiz-question">
+                        <label class="quiz-label">Duration</label>
+                        <select class="quiz-select" id="duration">
+                            <option value="quick">Quick (<1 hour)</option>
+                            <option value="1-2 hours">Medium (1-2 hours)</option>
+                            <option value="2-4 hours" selected>Long (2-4 hours)</option>
+                            <option value="4+ hours">Marathon (4+ hours)</option>
+                        </select>
+                    </div>
+
+                    <div class="quiz-question">
+                        <label class="quiz-label">Amenities (optional)</label>
+                        <input type="text" class="quiz-input" id="amenities" placeholder="outlets, cafe, natural-light">
+                    </div>
+
+                    <button class="quiz-btn" id="get-recommendation">Get Recommendation</button>
+                </div>
+
+                <div id="recommendation-result"></div>
+            </div>
+
+            <div id="app" class="loading">Loading study spots...</div>
+        </div>
 
         <footer>
             Made with 💚 for Dartmouth students

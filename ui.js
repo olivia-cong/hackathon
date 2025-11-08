@@ -11,6 +11,7 @@ import {
     database
 } from './database.js';
 import { ref, onValue } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+import { getRecommendation } from './recommendation-web.js';
 
 // Busyness and noise level configurations
 const busynessLevels = [
@@ -169,6 +170,61 @@ async function initApp() {
         const reason = prompt('Why are you reporting this? (optional)') || 'Incorrect status';
         reportAbuse(locationId, reason);
     };
+
+    // Setup quiz recommendation handler
+    const getRecBtn = document.getElementById('get-recommendation');
+    const recResult = document.getElementById('recommendation-result');
+
+    getRecBtn.addEventListener('click', async () => {
+        const quizAnswers = {
+            noisePreference: document.getElementById('noise').value,
+            studyType: document.getElementById('study-type').value,
+            atmosphere: document.getElementById('atmosphere').value,
+            duration: document.getElementById('duration').value,
+            needs: document.getElementById('amenities').value.split(',').map(s => s.trim()).filter(Boolean)
+        };
+
+        getRecBtn.disabled = true;
+        getRecBtn.textContent = 'Getting recommendation...';
+        recResult.innerHTML = '<div style="text-align: center; padding: 20px; color: #666;">Asking Claude AI...</div>';
+
+        // Note: In production, API key should be on server-side
+        // For demo purposes, prompt user or use environment
+        const apiKey = prompt('Enter your Claude API key (this is for demo only):');
+
+        if (!apiKey) {
+            recResult.innerHTML = '<div style="color: red;">API key required</div>';
+            getRecBtn.disabled = false;
+            getRecBtn.textContent = 'Get Recommendation';
+            return;
+        }
+
+        const recommendation = await getRecommendation(quizAnswers, locationData, apiKey);
+
+        if (recommendation.error) {
+            recResult.innerHTML = `<div style="color: red;">Error: ${recommendation.message}</div>`;
+        } else {
+            const primaryLoc = LOCATIONS.find(l => l.id === recommendation.primary.location);
+            const backupLoc = LOCATIONS.find(l => l.id === recommendation.backup.location);
+
+            recResult.innerHTML = `
+                <div class="recommendation-box">
+                    <div class="rec-title">🎯 Your Perfect Spot</div>
+                    <div class="rec-location">📍 ${primaryLoc?.name || recommendation.primary.location}</div>
+                    <div class="rec-reason">${recommendation.primary.reason}</div>
+
+                    <div class="rec-title" style="margin-top: 16px;">🔄 Backup Option</div>
+                    <div class="rec-location">📍 ${backupLoc?.name || recommendation.backup.location}</div>
+                    <div class="rec-reason">${recommendation.backup.reason}</div>
+
+                    ${recommendation.tip ? `<div class="rec-tip">💡 ${recommendation.tip}</div>` : ''}
+                </div>
+            `;
+        }
+
+        getRecBtn.disabled = false;
+        getRecBtn.textContent = 'Get Recommendation';
+    });
 
     renderApp();
 }
