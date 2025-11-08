@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpotCheck - Dartmouth Study Spaces</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #00693e 0%, #004d2c 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .tagline {
+            font-size: 1rem;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        .locations-grid {
+            display: grid;
+            gap: 16px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        }
+
+        .location-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .location-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 12px rgba(0,0,0,0.15);
+        }
+
+        .location-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #00693e;
+            margin-bottom: 12px;
+        }
+
+        .status-section {
+            margin-bottom: 16px;
+        }
+
+        .status-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #666;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .status-display {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .busyness-empty { background: #d1fae5; color: #065f46; }
+        .busyness-filling-up { background: #fed7aa; color: #9a3412; }
+        .busyness-packed { background: #fecaca; color: #991b1b; }
+
+        .noise-silent { background: #e0e7ff; color: #3730a3; }
+        .noise-whispers { background: #fce7f3; color: #831843; }
+        .noise-chatty { background: #ffedd5; color: #9a3412; }
+
+        .timestamp {
+            font-size: 0.75rem;
+            color: #999;
+            font-style: italic;
+        }
+
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .update-btn {
+            padding: 10px 8px;
+            border: 2px solid #e5e7eb;
+            background: white;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .update-btn:hover {
+            border-color: #00693e;
+            background: #f0fdf4;
+        }
+
+        .update-btn:active {
+            transform: scale(0.95);
+        }
+
+        .divider {
+            height: 1px;
+            background: #e5e7eb;
+            margin: 16px 0;
+        }
+
+        .loading {
+            text-align: center;
+            color: white;
+            font-size: 1.2rem;
+            padding: 40px;
+        }
+
+        .stale {
+            opacity: 0.6;
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 640px) {
+            h1 { font-size: 2rem; }
+            .locations-grid { grid-template-columns: 1fr; }
+            .button-grid { gap: 6px; }
+            .update-btn { font-size: 0.75rem; padding: 8px 6px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>SpotCheck</h1>
+            <p class="tagline">Know before you go. Real-time Dartmouth study spaces.</p>
+        </header>
+
+        <div id="app" class="loading">Loading study spots...</div>
+
+        <footer>
+            Made with 💚 for Dartmouth students
+        </footer>
+    </div>
+
+    <script type="module" src="./ui.js"></script>
+</body>
+</html>
