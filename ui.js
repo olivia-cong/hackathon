@@ -188,18 +188,20 @@ async function initApp() {
         getRecBtn.textContent = 'Getting recommendation...';
         recResult.innerHTML = '<div style="text-align: center; padding: 20px; color: #666;">Asking Claude AI...</div>';
 
-        // Note: In production, API key should be on server-side
-        // For demo purposes, prompt user or use environment
-        const apiKey = prompt('Enter your Claude API key (this is for demo only):');
+        // Call backend API instead of using API key directly
+        let recommendation;
+        try {
+            const response = await fetch('/api/recommendation', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ quizAnswers, liveLocationData: locationData })
+            });
 
-        if (!apiKey) {
-            recResult.innerHTML = '<div style="color: red;">API key required</div>';
-            getRecBtn.disabled = false;
-            getRecBtn.textContent = 'Get Recommendation';
-            return;
+            if (!response.ok) throw new Error('Failed to get recommendation');
+            recommendation = await response.json();
+        } catch (error) {
+            recommendation = { error: true, message: error.message };
         }
-
-        const recommendation = await getRecommendation(quizAnswers, locationData, apiKey);
 
         if (recommendation.error) {
             recResult.innerHTML = `<div style="color: red;">Error: ${recommendation.message}</div>`;
